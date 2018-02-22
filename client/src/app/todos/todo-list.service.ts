@@ -15,8 +15,8 @@ export class TodoListService {
     constructor(private http: HttpClient) {
     }
 
-    getTodos(todoCompany?: string): Observable<Todo[]> {
-        this.filterByCompany(todoCompany);
+    getTodos(todoOwner?: string): Observable<Todo[]> {
+        this.filterByOwner(todoOwner);
         return this.http.get<Todo[]>(this.todoUrl);
     }
 
@@ -34,27 +34,27 @@ export class TodoListService {
     }
     */
 
-    filterByCompany(todoCompany?: string): void {
-        if(!(todoCompany == null || todoCompany == "")){
-            if (this.todoUrl.indexOf('body=') !== -1){
+    filterByOwner(todoOwner?: string): void {
+        if(!(todoOwner == null || todoOwner == "")){
+            if (this.todoUrl.indexOf('owner=') !== -1){
                 //there was a previous search by body that we need to clear
-                let start = this.todoUrl.indexOf('body=');
+                let start = this.todoUrl.indexOf('owner=');
                 let end = this.todoUrl.indexOf('&', start);
                 this.todoUrl = this.todoUrl.substring(0, start-1) + this.todoUrl.substring(end+1);
             }
             if (this.todoUrl.indexOf('&') !== -1) {
                 //there was already some information passed in this url
-                this.todoUrl += 'body=' + todoCompany + '&';
+                this.todoUrl += 'owner=' + todoOwner + '&';
             }
             else {
                 //this was the first bit of information to pass in the url
-                this.todoUrl += "?body=" + todoCompany + "&";
+                this.todoUrl += "?owner=" + todoOwner + "&";
             }
         }
         else {
             //there was nothing in the box to put onto the URL... reset
-            if (this.todoUrl.indexOf('body=') !== -1){
-                let start = this.todoUrl.indexOf('body=');
+            if (this.todoUrl.indexOf('owner=') !== -1){
+                let start = this.todoUrl.indexOf('owner=');
                 let end = this.todoUrl.indexOf('&', start);
                 if (this.todoUrl.substring(start-1, start) === '?'){
                     start = start-1
@@ -65,7 +65,7 @@ export class TodoListService {
     }
 
     addNewTodo(owner: string, status: boolean, body : string, category : string): Observable<Boolean> {
-        const body = {owner:owner, status:status, body:body, category:category};
+        const todoBody = {owner:owner, status:status, body:body, category:category};
         console.log(body);
 
         //Send post request to add a new todo with the todo data as the body with specified headers.
