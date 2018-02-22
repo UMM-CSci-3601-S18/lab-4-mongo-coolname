@@ -37,6 +37,7 @@ public class MongoSpec {
 
     private MongoCollection<Document> userDocuments;
 
+
     @Before
     public void clearAndPopulateDB() {
         MongoClient mongoClient = new MongoClient();

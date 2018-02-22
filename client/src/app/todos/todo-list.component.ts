@@ -16,9 +16,11 @@ export class TodoListComponent implements OnInit {
     public todos: Todo[];
     public filteredTodos: Todo[];
 
-    public todoName : string;
-    public todoAge : number;
-    public todoCompany : string;
+    public todoOwner : string;
+    public todoID : string;
+    public todoStatus : boolean;
+    public todoBody : string;
+    public todoCategory : string;
 
     public loadReady: boolean = false;
 
@@ -42,23 +44,23 @@ export class TodoListComponent implements OnInit {
     }
 
 
-    public filterTodos(searchName: string, searchAge: number): Todo[] {
+    public filterTodos(searchOwner: string, searchStatus: boolean): Todo[] {
 
         this.filteredTodos = this.todos;
 
         //Filter by owner
-        if (searchName != null) {
-            searchName = searchName.toLocaleLowerCase();
+        if (searchOwner != null) {
+            searchOwner = searchOwner.toLocaleLowerCase();
 
             this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchName || todo.owner.toLowerCase().indexOf(searchName) !== -1;
+                return !searchOwner || todo.owner.toLowerCase().indexOf(searchOwner) !== -1;
             });
         }
 
         //Filter by status
-        if (searchAge != null) {
+        if (searchStatus != null) {
             this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchAge || todo.status == searchAge;
+                return !searchStatus || todo.status == searchStatus;
             });
         }
 
@@ -75,12 +77,13 @@ export class TodoListComponent implements OnInit {
         //
         //Subscribe waits until the data is fully downloaded, then
         //performs an action on it (the first lambda)
-
+        console.log("in refreshTodos");
         let todos : Observable<Todo[]> = this.todoListService.getTodos();
         todos.subscribe(
             todos => {
+                console.log("First todo in refresh is " + JSON.stringify(todos[0]));
                 this.todos = todos;
-                this.filterTodos(this.todoName, this.todoAge);
+                this.filterTodos(this.todoOwner, this.todoStatus);
             },
             err => {
                 console.log(err);
@@ -90,9 +93,11 @@ export class TodoListComponent implements OnInit {
 
 
     loadService(): void {
+        console.log('in loadService');
         this.loadReady = true;
-        this.todoListService.getTodos(this.todoCompany).subscribe(
+        this.todoListService.getTodos(this.todoBody).subscribe(
             todos => {
+                console.log("First todo in loadService is " + JSON.stringify(todos[0]));
                 this.todos = todos;
                 this.filteredTodos = this.todos;
             },

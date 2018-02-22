@@ -9,23 +9,23 @@ describe('Todo list service: ', () => {
     // A small collection of test todos
     const testTodos: Todo[] = [
         {
-            _id: 'chris_id',
-            owner: 'Chris',
-            status: 25,
-            body: 'UMM',
-            category: 'chris@this.that'
+            _id: '58af3a600343927e48e8720f',
+            owner: 'Blanche',
+            status: false,
+            body: 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.',
+            category: 'software design'
         },
         {
             _id: 'pat_id',
             owner: 'Pat',
-            status: 37,
+            status: true,
             body: 'IBM',
             category: 'pat@something.com'
         },
         {
             _id: 'jamie_id',
             owner: 'Jamie',
-            status: 37,
+            status: true,
             body: 'Frogs, Inc.',
             category: 'jamie@frogs.com'
         }

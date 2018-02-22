@@ -10,7 +10,7 @@ import {Todo} from "./todo";
 })
 export class AddTodoComponent {
     public newTodoOwner:string;
-    public newTodoStatus: number;
+    public newTodoStatus: string;
     public newTodoBody: string;
     public newTodoCategory: string;
     private todoAddSuccess : Boolean = false;
@@ -25,7 +25,7 @@ export class AddTodoComponent {
         this.dialogRef.close();
     }
 
-    addNewTodo(owner: string, status: number, body : string, category : string) : void{
+    addNewTodo(owner: string, status: boolean, body : string, category : string) : void{
 
         //Here we clear all the fields, there's probably a better way
         //of doing this could be with forms or something else
