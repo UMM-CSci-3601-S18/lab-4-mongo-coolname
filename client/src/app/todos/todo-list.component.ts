@@ -18,7 +18,7 @@ export class TodoListComponent implements OnInit {
 
     public todoOwner : string;
     public todoID : string;
-    public todoStatus : boolean;
+    public todoStatus : string;
     public todoBody : string;
     public todoCategory : string;
 
@@ -44,7 +44,7 @@ export class TodoListComponent implements OnInit {
     }
 
 
-    public filterTodos(searchOwner: string, searchStatus: boolean): Todo[] {
+    public filterTodos(searchOwner: string, searchStatus: string, searchBody: string): Todo[] {
 
         this.filteredTodos = this.todos;
 
@@ -59,8 +59,19 @@ export class TodoListComponent implements OnInit {
 
         //Filter by status
         if (searchStatus != null) {
+            searchStatus = searchStatus.toLocaleLowerCase();
+
             this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchStatus || todo.status == searchStatus;
+                return !searchStatus || String(todo.status).toLowerCase().indexOf(searchStatus) !== -1;
+            });
+        }
+
+        //Filter by body
+        if (searchBody != null) {
+            searchBody = searchBody.toLocaleLowerCase();
+
+            this.filteredTodos = this.filteredTodos.filter(todo => {
+                return !searchBody || todo.body.toLowerCase().indexOf(searchBody) !== -1;
             });
         }
 
@@ -83,7 +94,7 @@ export class TodoListComponent implements OnInit {
             todos => {
                 console.log("First todo in refresh is " + JSON.stringify(todos[0]));
                 this.todos = todos;
-                this.filterTodos(this.todoOwner, this.todoStatus);
+                this.filterTodos(this.todoOwner, this.todoStatus, this.todoBody);
             },
             err => {
                 console.log(err);
@@ -95,7 +106,7 @@ export class TodoListComponent implements OnInit {
     loadService(): void {
         console.log('in loadService');
         this.loadReady = true;
-        this.todoListService.getTodos(this.todoBody).subscribe(
+        this.todoListService.getTodos(this.todoID).subscribe(
             todos => {
                 console.log("First todo in loadService is " + JSON.stringify(todos[0]));
                 this.todos = todos;

@@ -64,6 +64,36 @@ export class TodoListService {
         }
     }
 
+    /*filterByBody(todoBody?: string): void {
+        if(!(todoBody == null || todoBody == "")){
+            if (this.todoUrl.indexOf('body=') !== -1){
+                //there was a previous search by body that we need to clear
+                let start = this.todoUrl.indexOf('body=');
+                let end = this.todoUrl.indexOf('&', start);
+                this.todoUrl = this.todoUrl.substring(0, start-1) + this.todoUrl.substring(end+1);
+            }
+            if (this.todoUrl.indexOf('&') !== -1) {
+                //there was already some information passed in this url
+                this.todoUrl += 'body=' + todoBody + '&';
+            }
+            else {
+                //this was the first bit of information to pass in the url
+                this.todoUrl += "?body=" + todoBody + "&";
+            }
+        }
+        else {
+            //there was nothing in the box to put onto the URL... reset
+            if (this.todoUrl.indexOf('body=') !== -1){
+                let start = this.todoUrl.indexOf('body=');
+                let end = this.todoUrl.indexOf('&', start);
+                if (this.todoUrl.substring(start-1, start) === '?'){
+                    start = start-1
+                }
+                this.todoUrl = this.todoUrl.substring(0, start) + this.todoUrl.substring(end+1);
+            }
+        }
+    }*/
+
     addNewTodo(owner: string, status: boolean, body : string, category : string): Observable<Boolean> {
         const todoBody = {owner:owner, status:status, body:body, category:category};
         console.log(body);

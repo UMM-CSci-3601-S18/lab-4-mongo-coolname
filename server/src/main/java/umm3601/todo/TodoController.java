@@ -79,7 +79,7 @@ public class TodoController {
             filterDoc = filterDoc.append("owner", targetOwner);
         }
 
-        if (queryParams.containsKey("body")) {
+       if (queryParams.containsKey("body")) {
             String targetContent = (queryParams.get("body")[0]);
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);
