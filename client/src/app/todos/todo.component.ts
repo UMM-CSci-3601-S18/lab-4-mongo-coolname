@@ -11,6 +11,7 @@ export class TodoComponent implements OnInit {
     public todo: Todo = null;
     private id: string;
 
+
     constructor(private todoListService: TodoListService) {
         // this.todos = this.todoListService.getTodos();
     }
@@ -31,7 +32,10 @@ export class TodoComponent implements OnInit {
         this.subscribeToServiceForId();
     }
 
+
+
     ngOnInit(): void {
         this.subscribeToServiceForId();
     }
+
 }
