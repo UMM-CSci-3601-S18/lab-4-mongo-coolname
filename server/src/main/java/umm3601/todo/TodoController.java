@@ -79,7 +79,20 @@ public class TodoController {
             filterDoc = filterDoc.append("owner", targetOwner);
         }
 
-       if (queryParams.containsKey("body")) {
+        /*if (queryParams.containsKey("body")) {
+            String targetBody = queryParams.get("body")[0];
+            filterDoc = filterDoc.append("body", targetBody);
+        }*/
+
+        if (queryParams.containsKey("category")) {
+            String targetContent = (queryParams.get("category")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("category", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("body")) {
             String targetContent = (queryParams.get("body")[0]);
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);

@@ -22,29 +22,45 @@ export class TodoListComponent implements OnInit {
     public todoBody : string;
     public todoCategory : string;
 
-    public loadReady: boolean = false;
 
     //Inject the TodoListService into this component.
     //That's what happens in the following constructor.
     //panelOpenState: boolean = false;
     //We can call upon the service for interacting
     //with the server.
+
+    private highlightedID: {'$oid': string} = { '$oid': '' };
     constructor(public todoListService: TodoListService, public dialog: MatDialog) {
 
     }
 
+    isHighlighted(todo: Todo): boolean {
+        return todo._id['$oid'] === this.highlightedID['$oid'];
+    }
+
     openDialog(): void {
-        let dialogRef = this.dialog.open(AddTodoComponent, {
+        const newTodo: Todo = {_id: '', owner: '', status: true, body: '', category: ''};
+        const dialogRef = this.dialog.open(AddTodoComponent, {
             width: '500px',
+            data: { todo: newTodo }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+        /*dialogRef.afterClosed().subscribe(result => {
+            this.todoListService.addNewTodo(result).subscribe(
+                result => {
+                    this.highlightedID = result;
+                    this.refreshUsers();
+                },
+                err => {
+                    // This should probably be turned into some sort of meaningful response.
+                    console.log('There was an error adding the user.');
+                    console.log('The error was ' + JSON.stringify(err));
+                });
+        });*/
     }
 
 
-    public filterTodos(searchOwner: string, searchStatus: string, searchBody: string): Todo[] {
+    public filterTodos(searchOwner: string, searchStatus: string, searchID: string): Todo[] {
 
         this.filteredTodos = this.todos;
 
@@ -66,14 +82,16 @@ export class TodoListComponent implements OnInit {
             });
         }
 
-        //Filter by body
-        if (searchBody != null) {
-            searchBody = searchBody.toLocaleLowerCase();
+
+        if (searchID != null) {
+            searchID = searchID.toLocaleLowerCase();
 
             this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchBody || todo.body.toLowerCase().indexOf(searchBody) !== -1;
+                return !searchID || todo._id.toLowerCase().indexOf(searchID) !== -1;
             });
         }
+
+
 
         return this.filteredTodos;
     }
@@ -88,13 +106,11 @@ export class TodoListComponent implements OnInit {
         //
         //Subscribe waits until the data is fully downloaded, then
         //performs an action on it (the first lambda)
-        console.log("in refreshTodos");
         let todos : Observable<Todo[]> = this.todoListService.getTodos();
         todos.subscribe(
             todos => {
-                console.log("First todo in refresh is " + JSON.stringify(todos[0]));
                 this.todos = todos;
-                this.filterTodos(this.todoOwner, this.todoStatus, this.todoBody);
+                this.filterTodos(this.todoOwner, this.todoStatus, this.todoID);
             },
             err => {
                 console.log(err);
@@ -104,9 +120,7 @@ export class TodoListComponent implements OnInit {
 
 
     loadService(): void {
-        console.log('in loadService');
-        this.loadReady = true;
-        this.todoListService.getTodos(this.todoID).subscribe(
+        this.todoListService.getTodos(this.todoCategory,this.todoBody).subscribe(
             todos => {
                 console.log("First todo in loadService is " + JSON.stringify(todos[0]));
                 this.todos = todos;
@@ -116,6 +130,8 @@ export class TodoListComponent implements OnInit {
                 console.log(err);
             }
         );
+
+
     }
 
 

@@ -18,8 +18,21 @@
                     <input matInput id="todoID" #input type="text" placeholder="Filter by ID" (input)="todoID = $event.target.value">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput id="todoBody" #input placeholder="Filter by body" (input)="todoBody = $event.target.value">
+                    <input matInput id="todoBody" #input type="search" placeholder="Search for body" [(ngModel)]="todoBody" />
+                    <button mat-button id="bodyClearSearch" type="button" *ngIf="todoBody" matSuffix mat-icon-button aria-label="clear" (click)="todoBody='';loadService()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput id="todoCategory" #input type="search" placeholder="Filter by category" [(ngModel)]="todoCategory" />
+                    <button mat-button id="categoryClearSearch" type="button" *ngIf="todoCategory" matSuffix mat-icon-button aria-label="clear" (click)="todoCategory='';loadService()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+
+
+                <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
                 <form>
                     <!--# The Angular feature-->
                     <label> Please select status:</label>
@@ -29,18 +42,16 @@
                         <option value="false">false</option>
                     </select>
                 </form>
-                <mat-form-field>
-                    <input matInput id="todoCategory" #input placeholder="Filter by category" (input)="todoCategory = $event.target.value">
-                </mat-form-field>
+
 
                 <mat-accordion *ngIf="todos; else todosError" >
-                <mat-expansion-panel #elem class="todos" [id]="todo._id" *ngFor="let todo of this.filterTodos(todoOwner, todoStatus)">
+                <mat-expansion-panel #elem class="todos" [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoOwner, todoStatus)">
                     <mat-expansion-panel-header>
-                        <mat-panel-title  matTooltip="ID: {{todo._id}}" >{{todo.owner}}</mat-panel-title>
+                        <mat-panel-title  matTooltip="ID: {{todo._id['$oid']}}" >{{todo.owner}}</mat-panel-title>
 
                     </mat-expansion-panel-header>
                     <mat-panel-description >Owner {{todo.owner}}</mat-panel-description>
-                    <mat-panel-description>ID: {{todo._id}} </mat-panel-description>
+                    <mat-panel-description>ID: {{todo._id['$oid']}}</mat-panel-description>
                     <mat-panel-description>Status: {{todo.status}} </mat-panel-description>
                     <mat-panel-description>Body: {{todo.body}} </mat-panel-description>
                     <mat-panel-description>Category: {{todo.category}} </mat-panel-description>
