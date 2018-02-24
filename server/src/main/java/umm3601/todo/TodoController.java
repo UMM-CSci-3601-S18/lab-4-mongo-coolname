@@ -74,9 +74,9 @@ public class TodoController {
 
         Document filterDoc = new Document();
 
-        if (queryParams.containsKey("status")) {
-            boolean targetStatus = Boolean.parseBoolean(queryParams.get("status")[0]);
-            filterDoc = filterDoc.append("status", targetStatus);
+        if (queryParams.containsKey("owner")) {
+            String targetOwner = queryParams.get("owner")[0];
+            filterDoc = filterDoc.append("owner", targetOwner);
         }
 
         if (queryParams.containsKey("body")) {
