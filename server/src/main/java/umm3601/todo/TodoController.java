@@ -92,6 +92,14 @@ public class TodoController {
             filterDoc = filterDoc.append("category", contentRegQuery);
         }
 
+        if (queryParams.containsKey("body")) {
+            String targetContent = (queryParams.get("body")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("body", contentRegQuery);
+        }
+
         //FindIterable comes from mongo, Document comes from Gson
         FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
 
