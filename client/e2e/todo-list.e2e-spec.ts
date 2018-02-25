@@ -1,3 +1,4 @@
+/*
 import {TodoPage} from './todo-list.po';
 import {browser, protractor, element, by} from 'protractor';
 import {Key} from 'selenium-webdriver';
@@ -41,12 +42,9 @@ describe('Todo list', () => {
 
     it('should click on the status 27 times and return 3 elements then ', () => {
         page.navigateTo();
-        page.getTodoByStatus();
-        for (let i = 0; i < 27; i++) {
-            page.selectUpKey();
-        }
+        page.getTodoByStatus("true");
 
-        expect(page.getUniqueTodo('software design')).toEqual('Blanche');
+        expect(page.getUniqueTodo('58af3a600343927e48e87212')).toEqual('Blanche');
 
         expect(page.getUniqueTodo('video games')).toEqual('Barry');
     });
@@ -158,5 +156,91 @@ describe('Todo list', () => {
         expect(element(by.id('categoryField')).isPresent()).toBeTruthy('There should be an category field');
         element(by.id('categoryField')).sendKeys('homework');
         element(by.id('exitWithoutAddingButton')).click();
+    });
+});
+*/
+
+import {TodoPage} from './todo-list.po';
+import {browser, protractor} from 'protractor';
+
+let origFn = browser.driver.controlFlow().execute;
+
+//https://hassantariqblog.wordpress.com/2015/11/09/reduce-speed-of-angular-e2e-protractor-tests/
+browser.driver.controlFlow().execute = function () {
+    let args = arguments;
+
+    // queue 100ms wait between test
+    //This delay is only put here so that you can watch the browser do its' thing.
+    //If you're tired of it taking long you can remove this call
+    origFn.call(browser.driver.controlFlow(), function () {
+        return protractor.promise.delayed(10);
+    });
+
+    return origFn.apply(browser.driver.controlFlow(), args);
+};
+
+describe('Todo list', () => {
+    let page: TodoPage;
+
+    beforeEach(() => {
+        page = new TodoPage();
+    });
+
+    it('should get and highlight Todo Owner attribute ', () => {
+        page.navigateTo();
+        expect(page.getTodoTitle()).toEqual('Todos');
+    });
+
+    // Owner Filtering
+    it('should type an owner and get a specific id', () => {
+        page.navigateTo();
+        page.typeAnOwner("fry");
+        expect(page.getUniqueTodo("58af3a600343927e48e87217")).toEqual("Fry");
+    });
+
+
+    // Filter by status
+    it('should type a status and get a specific id', () => {
+        page.navigateTo();
+        page.typeAStatus("true");
+        expect(page.getUniqueTodo("58af3a600343927e48e8721d")).toEqual("Dawn");
+    });
+
+    it('should type a status and get a specific id', () => {
+        page.navigateTo();
+        page.typeAStatus("false");
+        expect(page.getUniqueTodo("58af3a600343927e48e87219")).toEqual("Workman");
+    });
+
+    //Filter by Body
+    it('should type a word and get a specific id', () => {
+        page.navigateTo();
+        page.typeABody("Ullamco");
+        expect(page.getUniqueTodo("58af3a600343927e48e87221")).toEqual("Fry");
+    });
+
+    it('should type a letter and get a specific id', () => {
+        page.navigateTo();
+        page.typeABody("q");
+        expect(page.getUniqueTodo("58af3a600343927e48e87212")).toEqual("Blanche");
+    });
+
+    it('should type an entire body and get a specific id', () => {
+        page.navigateTo();
+        page.typeABody("Eiusmod commodo officia amet aliquip est ipsum nostrud duis sunt voluptate mollit excepteur. Sunt non in pariatur et culpa est sunt.");
+        expect(page.getUniqueTodo("58af3a600343927e48e87218")).toEqual("Workman");
+    });
+
+    //Filter by Category
+    it('should type a category and get a specific id', () => {
+        page.navigateTo();
+        page.typeACategory("software design");
+        expect(page.getUniqueTodo("58af3a600343927e48e87225")).toEqual("Fry");
+    });
+
+    it('should type a category and get a specific id', () => {
+        page.navigateTo();
+        page.typeACategory("homework");
+        expect(page.getUniqueTodo("58af3a600343927e48e87224")).toEqual("Roberta");
     });
 });
