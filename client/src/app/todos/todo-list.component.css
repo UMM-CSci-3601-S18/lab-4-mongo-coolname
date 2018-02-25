@@ -12,3 +12,25 @@
     padding-right: 14px;
 }
 
+#todo-list-title{
+    text-align: center;
+    font-family: "Times New RomanS";
+    font-size: 300%;
+    font-style: italic;
+}
+
+#addTodo {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.status{
+    text-align: right;
+}
+
+
+
+
+
+
+

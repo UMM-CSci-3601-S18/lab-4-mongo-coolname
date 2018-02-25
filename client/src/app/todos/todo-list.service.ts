@@ -15,7 +15,7 @@ export class TodoListService {
     constructor(private http: HttpClient) {
     }
 
-    getTodos(todoCategory?: string,todoBody?: string): Observable<Todo[]> {
+    getTodos(todoOwner?: string, todoCategory?: string,todoBody?: string): Observable<Todo[]> {
         this.filterByCategory(todoCategory);
         this.filterByBody(todoBody);
         return this.http.get<Todo[]>(this.todoUrl);
@@ -70,6 +70,7 @@ export class TodoListService {
             }
         }
     }
+
 
     filterByBody(todoBody?: string): void {
         if(!(todoBody == null || todoBody == "")){

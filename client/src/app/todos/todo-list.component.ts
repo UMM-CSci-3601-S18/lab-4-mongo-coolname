@@ -60,7 +60,7 @@ export class TodoListComponent implements OnInit {
     }
 
 
-    public filterTodos(searchOwner: string, searchStatus: string, searchID: string): Todo[] {
+    public filterTodos(searchOwner: string, searchID: string, searchStatus: string, searchBody: string, searchCategory: string): Todo[] {
 
         this.filteredTodos = this.todos;
 
@@ -82,17 +82,6 @@ export class TodoListComponent implements OnInit {
             });
         }
 
-
-        if (searchID != null) {
-            searchID = searchID.toLocaleLowerCase();
-
-            this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchID || todo._id.toLowerCase().indexOf(searchID) !== -1;
-            });
-        }
-
-
-
         return this.filteredTodos;
     }
 
@@ -103,14 +92,13 @@ export class TodoListComponent implements OnInit {
     refreshTodos(): Observable<Todo[]> {
         //Get Todos returns an Observable, basically a "promise" that
         //we will get the data from the server.
-        //
         //Subscribe waits until the data is fully downloaded, then
         //performs an action on it (the first lambda)
         let todos : Observable<Todo[]> = this.todoListService.getTodos();
         todos.subscribe(
             todos => {
                 this.todos = todos;
-                this.filterTodos(this.todoOwner, this.todoStatus, this.todoID);
+                this.filterTodos(this.todoOwner, this.todoStatus, this.todoID, this.todoBody, this.todoCategory);
             },
             err => {
                 console.log(err);
@@ -133,6 +121,27 @@ export class TodoListComponent implements OnInit {
 
 
     }
+    setTitle(owner, category):string{
+        if(this.todoOwner != null){
+            return category;
+        }
+        return owner;
+    }
+
+    convertStatus(status):string{
+        if(status === true){
+            return "Complete"
+        }
+        return "Incomplete"
+    }
+
+    setStatus(status):string{
+        if(status == true) {
+            return "✓";
+        }
+        return "✗";
+    }
+
 
 
     ngOnInit(): void {
