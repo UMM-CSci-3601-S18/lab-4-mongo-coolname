@@ -74,10 +74,10 @@ public class TodoController {
 
         Document filterDoc = new Document();
 
-        if (queryParams.containsKey("owner")) {
+        /*if (queryParams.containsKey("owner")) {
             String targetOwner = queryParams.get("owner")[0];
             filterDoc = filterDoc.append("owner", targetOwner);
-        }
+        }*/
 
 
         if (queryParams.containsKey("category")) {
