@@ -9,25 +9,25 @@ describe('Todo list service: ', () => {
     // A small collection of test todos
     const testTodos: Todo[] = [
         {
-            _id: '58af3a600343927e48e8720f',
+            _id: '58af3a600343927e48e87212',
             owner: 'Blanche',
-            status: false,
-            body: 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.',
+            status: true,
+            body: 'Incididunt enim ea sit qui esse magna eu. Nisi sunt exercitation est Lorem consectetur incididunt cupidatat laboris commodo veniam do ut sint.',
             category: 'software design'
         },
         {
-            _id: 'pat_id',
-            owner: 'Pat',
-            status: true,
+            _id: '58af3a600343927e48e87217',
+            owner: 'Fry',
+            status: false,
             body: 'IBM',
-            category: 'pat@something.com'
+            category: 'homework'
         },
         {
-            _id: 'jamie_id',
-            owner: 'Jamie',
+            _id: '58af3a600343927e48e87214',
+            owner: 'Barry',
             status: true,
-            body: 'Frogs, Inc.',
-            category: 'jamie@frogs.com'
+            body: 'Nisi sit non non sunt veniam pariatur. Elit reprehenderit aliqua consectetur est dolor officia et adipisicing elit officia nisi elit enim nisi.',
+            category: 'video games'
         }
     ];
     const mTodos: Todo[] = testTodos.filter(todo =>
@@ -78,12 +78,12 @@ describe('Todo list service: ', () => {
         req.flush(testTodos);
     });
 
-    it('getTodos(todoCompany) adds appropriate param string to called URL', () => {
+    it('getTodos(todoBody) adds appropriate param string to called URL', () => {
         todoListService.getTodos("m").subscribe(
             todos => expect(todos).toEqual(mTodos)
         );
 
-        const req = httpTestingController.expectOne(todoListService.baseUrl + '?body=m&');
+        const req = httpTestingController.expectOne(todoListService.baseUrl + '?category=m&');
         expect(req.request.method).toEqual('GET');
         req.flush(mTodos);
     });
