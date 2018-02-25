@@ -22,25 +22,25 @@ describe("Todo list", () => {
         todoListServiceStub = {
             getTodos: () => Observable.of([
                 {
-                    _id: "chris_id",
-                    owner: "Chris",
-                    status: 25,
-                    body: "UMM",
-                    category: "chris@this.that"
+                    _id: "58af3a600343927e48e87212",
+                    owner: "Blanche",
+                    status: true,
+                    body: "Incididunt enim ea sit qui esse magna eu. Nisi sunt exercitation est Lorem consectetur incididunt cupidatat laboris commodo veniam do ut sint.",
+                    category: "software design"
                 },
                 {
-                    _id: "pat_id",
-                    owner: "Pat",
-                    status: 37,
-                    body: "IBM",
-                    category: "pat@something.com"
+                    _id: "58af3a600343927e48e87217",
+                    owner: "Fry",
+                    status: false,
+                    body: "Veniam ut ex sit voluptate Lorem. Laboris ipsum nulla proident aute culpa esse aute pariatur velit deserunt deserunt cillum officia dolore.",
+                    category: "homework"
                 },
                 {
-                    _id: "jamie_id",
-                    owner: "Jamie",
-                    status: 37,
-                    body: "Frogs, Inc.",
-                    category: "jamie@frogs.com"
+                    _id: "58af3a600343927e48e87214",
+                    owner: "Barry",
+                    status: true,
+                    body: "Nisi sit non non sunt veniam pariatur. Elit reprehenderit aliqua consectetur est dolor officia et adipisicing elit officia nisi elit enim nisi.",
+                    category: "video games"
                 }
             ])
         };
@@ -67,36 +67,36 @@ describe("Todo list", () => {
         expect(todoList.todos.length).toBe(3);
     });
 
-    it("contains a todo ownerd 'Chris'", () => {
-        expect(todoList.todos.some((todo: Todo) => todo.owner === "Chris")).toBe(true);
+    it("contains a todo owner 'Blanche'", () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === "Blanche")).toBe(true);
     });
 
-    it("contain a todo ownerd 'Jamie'", () => {
-        expect(todoList.todos.some((todo: Todo) => todo.owner === "Jamie")).toBe(true);
+    it("contain a todo owner 'Fry'", () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === "Fry")).toBe(true);
     });
 
-    it("doesn't contain a todo ownerd 'Santa'", () => {
-        expect(todoList.todos.some((todo: Todo) => todo.owner === "Santa")).toBe(false);
+    it("doesn't contain a todo owner 'Barry'", () => {
+        expect(todoList.todos.some((todo: Todo) => todo.owner === "Barry")).toBe(true);
     });
 
-    it("has two todos that are 37 years old", () => {
-        expect(todoList.todos.filter((todo: Todo) => todo.status === 37).length).toBe(2);
+    it("has two todos that are true", () => {
+        expect(todoList.todos.filter((todo: Todo) => todo.status === true).length).toBe(2);
     });
 
     it("todo list filters by owner", () => {
         expect(todoList.filteredTodos.length).toBe(3);
-        todoList.todoName = "a";
+        todoList.todoOwner = "f";
         let a : Observable<Todo[]> = todoList.refreshTodos();
         a.do(x => Observable.of(x))
             .subscribe(x =>
             {
-                expect(todoList.filteredTodos.length).toBe(2);
+                expect(todoList.filteredTodos.length).toBe(1);
             });
     });
 
     it("todo list filters by status", () => {
         expect(todoList.filteredTodos.length).toBe(3);
-        todoList.todoAge = 37;
+        todoList.todoStatus = "true";
         let a : Observable<Todo[]> = todoList.refreshTodos();
         a.do(x => Observable.of(x))
             .subscribe(x =>
@@ -107,13 +107,13 @@ describe("Todo list", () => {
 
     it("todo list filters by owner and status", () => {
         expect(todoList.filteredTodos.length).toBe(3);
-        todoList.todoAge = 37;
-        todoList.todoName = "i";
+        todoList.todoStatus = "true";
+        todoList.todoOwner = "b";
         let a : Observable<Todo[]> = todoList.refreshTodos();
         a.do(x => Observable.of(x))
             .subscribe(x =>
             {
-                expect(todoList.filteredTodos.length).toBe(1);
+                expect(todoList.filteredTodos.length).toBe(2);
             });
     });
 
