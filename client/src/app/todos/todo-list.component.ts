@@ -83,16 +83,6 @@ export class TodoListComponent implements OnInit {
         }
 
 
-        if (searchID != null) {
-            searchID = searchID.toLocaleLowerCase();
-
-            this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchID || todo._id.toLowerCase().indexOf(searchID) !== -1;
-            });
-        }
-
-
-
         return this.filteredTodos;
     }
 

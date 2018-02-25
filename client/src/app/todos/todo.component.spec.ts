@@ -19,25 +19,25 @@ describe("Todo component", () => {
         todoListServiceStub = {
             getTodoById: (todoId: string) => Observable.of([
                 {
-                    _id: "chris_id",
-                    owner: "Chris",
+                    _id: "58af3a600343927e48e87212",
+                    owner: "Blanche",
                     status: true,
-                    body: "UMM",
-                    category: "chris@this.that"
+                    body: "Incididunt enim ea sit qui esse magna eu. Nisi sunt exercitation est Lorem consectetur incididunt cupidatat laboris commodo veniam do ut sint.",
+                    category: "software design"
                 },
                 {
-                    _id: "pat_id",
-                    owner: "Pat",
-                    status: true,
-                    body: "IBM",
-                    category: "pat@something.com"
+                    _id: "58af3a600343927e48e87217",
+                    owner: "Fry",
+                    status: false,
+                    body: "Veniam ut ex sit voluptate Lorem. Laboris ipsum nulla proident aute culpa esse aute pariatur velit deserunt deserunt cillum officia dolore.",
+                    category: "homework"
                 },
                 {
-                    _id: "jamie_id",
-                    owner: "Jamie",
+                    _id: "58af3a600343927e48e87214",
+                    owner: "Barry",
                     status: true,
-                    body: "Frogs, Inc.",
-                    category: "jamie@frogs.com"
+                    body: "Nisi sit non non sunt veniam pariatur. Elit reprehenderit aliqua consectetur est dolor officia et adipisicing elit officia nisi elit enim nisi.",
+                    category: "video games"
                 }
             ].find(todo => todo._id === todoId))
         };
@@ -56,15 +56,15 @@ describe("Todo component", () => {
         });
     }));
 
-    it("can retrieve Pat by ID", () => {
-        todoComponent.setId("pat_id");
+    it("can retrieve Blanche by ID", () => {
+        todoComponent.setId("58af3a600343927e48e87212");
         expect(todoComponent.todo).toBeDefined();
-        expect(todoComponent.todo.owner).toBe("Pat");
-        expect(todoComponent.todo.category).toBe("pat@something.com");
+        expect(todoComponent.todo.owner).toBe("Blanche");
+        expect(todoComponent.todo.category).toBe("software design");
     });
 
-    it("returns undefined for Santa", () => {
-        todoComponent.setId("Santa");
+    it("returns undefined for Fry", () => {
+        todoComponent.setId("Fry");
         expect(todoComponent.todo).not.toBeDefined();
     });
 
