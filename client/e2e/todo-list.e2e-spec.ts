@@ -202,6 +202,7 @@ describe('Todo list', () => {
     // Filter by status
     it('should type a status and get a specific id', () => {
         page.navigateTo();
+        page.selectDownKey();
         page.typeAStatus("true");
         expect(page.getUniqueTodo("58af3a600343927e48e8721d")).toEqual("✓ Dawn");
     });

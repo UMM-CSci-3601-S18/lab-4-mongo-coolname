@@ -69,7 +69,7 @@ public class TodoRequestHandler {
      * @param res the HTTP response
      * @return a boolean as whether the todo was added successfully or not
      */
-    public boolean addNewTodo(Request req, Response res)
+    public String addNewTodo(Request req, Response res)
     {
 
         res.type("application/json");
@@ -83,7 +83,7 @@ public class TodoRequestHandler {
                     String owner = dbO.getString("owner");
                     //For some reason status is a string right now, caused by angular.
                     //This is a problem and should not be this way but here ya go
-                    boolean status = dbO.getBoolean("status");
+                    Boolean status = dbO.getBoolean("status");
                     String body = dbO.getString("body");
                     String category = dbO.getString("category");
 
@@ -93,20 +93,20 @@ public class TodoRequestHandler {
                 catch(NullPointerException e)
                 {
                     System.err.println("A value was malformed or omitted, new todo request failed.");
-                    return false;
+                    return null;
                 }
 
             }
             else
             {
                 System.err.println("Expected BasicDBObject, received " + o.getClass());
-                return false;
+                return null;
             }
         }
         catch(RuntimeException ree)
         {
             ree.printStackTrace();
-            return false;
+            return null;
         }
     }
 }

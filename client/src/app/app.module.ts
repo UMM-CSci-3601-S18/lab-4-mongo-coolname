@@ -40,7 +40,7 @@ import {AddTodoComponent} from './todos/add-todo.component';
 
         TodoListComponent,
         TodoComponent,
-        AddTodoComponent
+        AddTodoComponent,
     ],
     providers: [
         UserListService,
