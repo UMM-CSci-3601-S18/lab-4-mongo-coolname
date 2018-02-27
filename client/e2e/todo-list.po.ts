@@ -149,10 +149,13 @@ export class TodoPage {
         browser.actions().sendKeys(Key.ARROW_UP).perform();
     }
 
+    selectDownKey(){
+        browser.actions().sendKeys(Key.ARROW_DOWN).perform();
+    }
+
     getTodoByStatus() {
         let input = element(by.id('todoStatus'));
         input.click();
-        input.sendKeys(Key.TAB);
     }
 
     backspace(){
