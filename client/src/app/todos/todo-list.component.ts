@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TodoListService} from "./todo-list.service";
 import {Todo} from "./todo";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {MatDialog} from '@angular/material';
 import {AddTodoComponent} from "./add-todo.component"
 
@@ -45,18 +45,18 @@ export class TodoListComponent implements OnInit {
             data: { todo: newTodo }
         });
 
-        /*dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(result => {
             this.todoListService.addNewTodo(result).subscribe(
                 result => {
                     this.highlightedID = result;
-                    this.refreshUsers();
+                    this.refreshTodos();
                 },
                 err => {
                     // This should probably be turned into some sort of meaningful response.
-                    console.log('There was an error adding the user.');
-                    console.log('The error was ' + JSON.stringify(err));
+                    console.log('There was an error adding the todo.');
+                    console.log('todoThe error was ' + JSON.stringify(err));
                 });
-        });*/
+        });
     }
 
 
