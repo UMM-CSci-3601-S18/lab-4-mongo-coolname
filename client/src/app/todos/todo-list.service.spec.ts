@@ -83,7 +83,7 @@ describe('Todo list service: ', () => {
             todos => expect(todos).toEqual(mTodos)
         );
 
-        const req = httpTestingController.expectOne(todoListService.baseUrl + '?category=m&');
+        const req = httpTestingController.expectOne(todoListService.baseUrl + '?body=m&');
         expect(req.request.method).toEqual('GET');
         req.flush(mTodos);
     });

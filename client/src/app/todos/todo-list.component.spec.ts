@@ -101,7 +101,7 @@ describe("Todo list", () => {
         a.do(x => Observable.of(x))
             .subscribe(x =>
             {
-                expect(todoList.filteredTodos.length).toBe(2);
+                expect(todoList.filteredTodos.length).toBe(3);
             });
     });
 

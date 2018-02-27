@@ -108,7 +108,7 @@ export class TodoListComponent implements OnInit {
 
 
     loadService(): void {
-        this.todoListService.getTodos(this.todoCategory,this.todoBody).subscribe(
+        this.todoListService.getTodos(this.todoBody,this.todoCategory).subscribe(
             todos => {
                 console.log("First todo in loadService is " + JSON.stringify(todos[0]));
                 this.todos = todos;

@@ -195,7 +195,7 @@ describe('Todo list', () => {
     it('should type an owner and get a specific id', () => {
         page.navigateTo();
         page.typeAnOwner("fry");
-        expect(page.getUniqueTodo("58af3a600343927e48e87217")).toEqual("Fry");
+        expect(page.getUniqueTodo("58af3a600343927e48e87217")).toEqual("✗ homework");
     });
 
 
@@ -203,44 +203,44 @@ describe('Todo list', () => {
     it('should type a status and get a specific id', () => {
         page.navigateTo();
         page.typeAStatus("true");
-        expect(page.getUniqueTodo("58af3a600343927e48e8721d")).toEqual("Dawn");
+        expect(page.getUniqueTodo("58af3a600343927e48e8721d")).toEqual("✓ Dawn");
     });
 
     it('should type a status and get a specific id', () => {
         page.navigateTo();
         page.typeAStatus("false");
-        expect(page.getUniqueTodo("58af3a600343927e48e87219")).toEqual("Workman");
+        expect(page.getUniqueTodo("58af3a600343927e48e87219")).toEqual("✗ Workman");
     });
 
     //Filter by Body
     it('should type a word and get a specific id', () => {
         page.navigateTo();
         page.typeABody("Ullamco");
-        expect(page.getUniqueTodo("58af3a600343927e48e87221")).toEqual("Fry");
+        expect(page.getUniqueTodo("58af3a600343927e48e87221")).toEqual("✓ Fry");
     });
 
     it('should type a letter and get a specific id', () => {
         page.navigateTo();
         page.typeABody("q");
-        expect(page.getUniqueTodo("58af3a600343927e48e87212")).toEqual("Blanche");
+        expect(page.getUniqueTodo("58af3a600343927e48e87212")).toEqual("✓ Blanche");
     });
 
     it('should type an entire body and get a specific id', () => {
         page.navigateTo();
         page.typeABody("Eiusmod commodo officia amet aliquip est ipsum nostrud duis sunt voluptate mollit excepteur. Sunt non in pariatur et culpa est sunt.");
-        expect(page.getUniqueTodo("58af3a600343927e48e87218")).toEqual("Workman");
+        expect(page.getUniqueTodo("58af3a600343927e48e87218")).toEqual("✓ Workman");
     });
 
     //Filter by Category
     it('should type a category and get a specific id', () => {
         page.navigateTo();
         page.typeACategory("software design");
-        expect(page.getUniqueTodo("58af3a600343927e48e87225")).toEqual("Fry");
+        expect(page.getUniqueTodo("58af3a600343927e48e87225")).toEqual("✗ Fry");
     });
 
     it('should type a category and get a specific id', () => {
         page.navigateTo();
         page.typeACategory("homework");
-        expect(page.getUniqueTodo("58af3a600343927e48e87224")).toEqual("Roberta");
+        expect(page.getUniqueTodo("58af3a600343927e48e87224")).toEqual("✓ Roberta");
     });
 });

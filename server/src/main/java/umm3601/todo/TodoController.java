@@ -84,7 +84,7 @@ public class TodoController {
             String targetContent = (queryParams.get("category")[0]);
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);
-            contentRegQuery.append("$options", "i");
+            //contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("category", contentRegQuery);
         }
 
@@ -92,7 +92,7 @@ public class TodoController {
             String targetContent = (queryParams.get("body")[0]);
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);
-            contentRegQuery.append("$options", "i");
+            //contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("body", contentRegQuery);
         }
 
