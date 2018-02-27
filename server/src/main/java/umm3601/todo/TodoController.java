@@ -9,7 +9,17 @@ import com.mongodb.util.JSON;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Accumulators;
+
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.AggregateIterable;
+
+import java.util.Arrays;
+
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -131,6 +141,48 @@ public class TodoController {
             me.printStackTrace();
             return null;
         }
+    }
+
+    public String todoSummary() {
+        float count = todoCollection.count();
+        float percent = 100/count;
+
+        AggregateIterable<Document> totOwner = todoCollection.aggregate(
+            Arrays.asList(
+                Aggregates.group("$owner", Accumulators.sum("count", 1))
+            )
+        );
+        AggregateIterable<Document> finOwner = todoCollection.aggregate(
+
+            Arrays.asList(
+                Aggregates.match(Filters.eq("status", true)),
+                Aggregates.group("$owner", Accumulators.sum("count", 1),
+                    Accumulators.sum("percent", percent))
+
+            )
+        );
+
+
+        AggregateIterable<Document> catOwner = todoCollection.aggregate(
+            Arrays.asList(
+                Aggregates.match(Filters.eq("category", "homework")),
+                Aggregates.group("$owner", Accumulators.sum("count", 1),
+                    Accumulators.sum("percent", percent))
+            )
+        );
+
+
+        AggregateIterable<Document> bodyOwner = todoCollection.aggregate(
+            Arrays.asList(
+                Aggregates.match(Filters.eq("body", "sunt")),
+                Aggregates.group("$owner", Accumulators.sum("count", 1),
+                    Accumulators.sum("percent", percent))
+            )
+        );
+
+        List pipe = Arrays.asList(totOwner,finOwner,catOwner,bodyOwner);
+
+        return JSON.serialize(pipe);
     }
 
 
